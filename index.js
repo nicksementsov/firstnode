@@ -1,8 +1,8 @@
 const express =  require("express");
-const { Pool } = require("pg");
+const { Pool } = require("pg");			// Extracting class Pool
 
 const app = express();
-const pool = new Pool({
+const siteone_db = new Pool({
 	user: 'djangobot',
 	database: 'siteone',
 	password: 'berryTrauma',
@@ -10,9 +10,15 @@ const pool = new Pool({
 	host: 'localhost',
 });
 
-module.exports = { pool };
+module.exports = { siteone_db };
 
 const PORT = 8080;
+
+// With a querystring
+app.get('/search', (req, res) => {
+	const { month } = req.query;
+	res.send(`Searching month of ${month}.`);
+})
 
 app.get('/:month/:day', (req, res) => {
 	const { month, day } = req.params;
