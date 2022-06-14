@@ -16,8 +16,8 @@ const PORT = 8080;
 
 // With a querystring
 app.get('/search', (req, res) => {
-	const { month } = req.query;
-	res.send(`Searching month of ${month}.`);
+	const { month, day} = req.query;
+	res.send(`Searching day ${day} of ${month}.`);
 })
 
 app.get('/:month/:day', (req, res) => {
