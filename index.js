@@ -14,9 +14,19 @@ module.exports = { pool };
 
 const PORT = 8080;
 
-app.use((req, res) =>{
-	res.send("response");
-});
+app.get('/:month/:day', (req, res) => {
+	const { month, day } = req.params;
+	res.send(`Day ${day} of ${month}.`)
+})
+
+app.get('/:month', (req, res) => {
+	const { month } = req.params;
+	res.send(`Month of ${month}.`);
+})
+
+app.get('/', (req, res) => {
+	res.send('Home');
+})
 
 app.listen(PORT, () =>{
 	const strin = `listening on port: ${PORT}`;
