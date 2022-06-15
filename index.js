@@ -1,3 +1,4 @@
+const path = require("path");
 const express =  require("express");
 const { Pool } = require("pg");			// Extracting class Pool
 
@@ -9,6 +10,9 @@ const siteone_db = new Pool({
 	port: 5432,
 	host: 'localhost',
 });
+
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, '/views'));
 
 module.exports = { siteone_db };
 
@@ -31,7 +35,7 @@ app.get('/:month', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-	res.send('Home');
+	res.render('index');
 })
 
 app.listen(PORT, () =>{
