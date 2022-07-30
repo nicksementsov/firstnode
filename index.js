@@ -3,13 +3,7 @@ const express =  require("express");
 const { Pool } = require("pg");			// Extracting class Pool
 
 const app = express();
-const siteone_db = new Pool({
-	user: 'gcloud_postgres',
-	database: 'webdevdb',
-	password: 'berryTrauma',
-	port: 5432,
-	host: 'localhost',
-});
+const siteone_db = new Pool();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
