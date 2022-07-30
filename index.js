@@ -24,7 +24,7 @@ app.get('/:month', (req, res) => {
 });
 
 app.get('/post/:id', (req, res) => {
-    console.log(req.params)
+    console.log(req.params["id"])
     res.render('viewpost');
 });
 
