@@ -28,6 +28,10 @@ app.get('/:month', (req, res) => {
 	res.send(`Month of ${month}.`);
 })
 
+app.get('/post/:id', (req, res) => {
+    res.render('viewpost');
+});
+
 app.get('/', (req, res) => {
 	res.render('index');
 })
