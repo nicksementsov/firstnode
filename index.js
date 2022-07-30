@@ -23,20 +23,33 @@ app.get('/:month', (req, res) => {
 	res.send(`Month of ${month}.`);
 });
 
-async function find_post(postid) {
-    try {
-        const foundPost = await siteone_db.query("SELECT * FROM simpleblog");
-	return { id: foundPost.rows[0]["id"], title: foundPost.rows[0]["title"] };
-    } catch (error) {
-        console.log(error);
-    }
+var find_post = function (postid) {
+    var promise = new Promise(function (resolve, reject) {
+        var pid;
+        var title;
+        var content;
+
+        siteone_db.query("SELECT * FROM simpleblog", function (err, res) {
+            if (err) {
+                reject(err)
+            } else {
+                title = res.rows[0]["title"];
+            }
+        });
+    });
+
+    return promise;
 };
 
 app.get('/post/:id', (req, res) => {
-    const queryText = "SELECT * FROM simpleblog";
-    var foundPost = find_post(1);
-    console.log(foundPost);
-    res.render('viewpost', { title: foundPost["title"]});
+    find_post(1)
+    .then(function success(result) {
+        console.log(result);
+        console.log(result);
+    }, function error(error) {
+        console.log(error);
+    });
+    
 });
 
 app.get('/', (req, res) => {
