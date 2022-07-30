@@ -16,17 +16,12 @@ const PORT = 8080;
 app.get('/search', (req, res) => {
 	const { month, day} = req.query;
 	res.send(`Searching day ${day} of ${month}.`);
-})
-
-app.get('/:month/:day', (req, res) => {
-	const { month, day } = req.params;
-	res.send(`Day ${day} of ${month}.`)
-})
+});
 
 app.get('/:month', (req, res) => {
 	const { month } = req.params;
 	res.send(`Month of ${month}.`);
-})
+});
 
 app.get('/post/:id', (req, res) => {
     res.render('viewpost');
@@ -34,7 +29,7 @@ app.get('/post/:id', (req, res) => {
 
 app.get('/', (req, res) => {
 	res.render('index');
-})
+});
 
 app.listen(PORT, () =>{
 	const strin = `listening on port: ${PORT}`;
