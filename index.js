@@ -26,7 +26,7 @@ app.get('/:month', (req, res) => {
 async function find_post(postid) {
     try {
         const foundPost = await siteone_db.query("SELECT * FROM simpleblog");
-        console.log(foundPost["content"]);
+        console.log(foundPost);
     } catch (error) {
         console.log(error);
     }
