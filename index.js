@@ -33,8 +33,14 @@ async function find_post(postid) {
 };
 
 app.get('/post/:id', (req, res) => {
-    const foundPost = find_post(req.params["id"]);
-    console.log(foundPost.rows);
+    const queryText = "SELECT * FROM simpleblog";
+    siteone_db.query(queryText, (err, res) => {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log(res.rows[0]);
+        }
+    });
 });
 
 app.get('/', (req, res) => {
