@@ -4,8 +4,8 @@ const { Pool } = require("pg");			// Extracting class Pool
 
 const app = express();
 const siteone_db = new Pool({
-	user: 'djangobot',
-	database: 'siteone',
+	user: 'gcloud_postgres',
+	database: 'webdevdb',
 	password: 'berryTrauma',
 	port: 5432,
 	host: 'localhost',
