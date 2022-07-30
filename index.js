@@ -26,7 +26,7 @@ app.get('/:month', (req, res) => {
 async function find_post(postid) {
     try {
         const foundPost = await siteone_db.query("SELECT * FROM simpleblog");
-        return foundPost.rows[0];
+	return { id: foundPost.rows[0]["id"], title: foundPost.rows[0]["title"] };
     } catch (error) {
         console.log(error);
     }
@@ -34,8 +34,9 @@ async function find_post(postid) {
 
 app.get('/post/:id', (req, res) => {
     const queryText = "SELECT * FROM simpleblog";
-    const foundPost = find_post(1);
-    res.render('viewpost', { title: foundPost["title"]})
+    var foundPost = find_post(1);
+    console.log(foundPost);
+    res.render('viewpost', { title: foundPost["title"]});
 });
 
 app.get('/', (req, res) => {
