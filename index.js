@@ -24,8 +24,13 @@ app.get('/:month', (req, res) => {
 });
 
 app.get('/post/:id', (req, res) => {
-    console.log(req.params["id"])
-    res.render('viewpost');
+    try {
+        const postID = res["id"];
+        const foundPost = await siteone_db.query("SELECT * FROM simpleblog");
+        console.log(foundPost["content"]);
+    } catch (error) {
+        console.log(error);
+    }
 });
 
 app.get('/', (req, res) => {
