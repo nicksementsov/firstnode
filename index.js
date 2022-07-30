@@ -34,7 +34,7 @@ async function find_post(postid) {
 
 app.get('/post/:id', (req, res) => {
     const foundPost = find_post(req.params["id"]);
-    console.log(foundPost);
+    console.log(foundPost.rows);
 });
 
 app.get('/', (req, res) => {
