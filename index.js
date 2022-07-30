@@ -23,14 +23,17 @@ app.get('/:month', (req, res) => {
 	res.send(`Month of ${month}.`);
 });
 
-app.get('/post/:id', (req, res) => {
+async function find_post(postid) {
     try {
-        const postID = res["id"];
         const foundPost = await siteone_db.query("SELECT * FROM simpleblog");
         console.log(foundPost["content"]);
     } catch (error) {
         console.log(error);
     }
+};
+
+app.get('/post/:id', (req, res) => {
+    find_post(res["id"]);
 });
 
 app.get('/', (req, res) => {
