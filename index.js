@@ -39,6 +39,7 @@ app.get('/post/:id', (req, res) => {
             console.log(err)
         } else {
             console.log(res.rows[0]);
+            res.render('viewpost', {title: res.rows[0]["title"]});
         }
     });
 });
