@@ -46,6 +46,7 @@ app.get('/post/:id', (req, res) => {
     .then(function success(result) {
         console.log(result);
         console.log(result);
+        res.render("whatever");
     }, function error(error) {
         console.log(error);
     });
