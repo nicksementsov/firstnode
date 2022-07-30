@@ -26,14 +26,15 @@ app.get('/:month', (req, res) => {
 async function find_post(postid) {
     try {
         const foundPost = await siteone_db.query("SELECT * FROM simpleblog");
-        console.log(foundPost.rows[0]["content"]);
+        return foundPost;
     } catch (error) {
         console.log(error);
     }
 };
 
 app.get('/post/:id', (req, res) => {
-    find_post(res["id"]);
+    const foundPost = find_post(req.params["id"]);
+    console.log(foundPost);
 });
 
 app.get('/', (req, res) => {
