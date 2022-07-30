@@ -35,6 +35,7 @@ async function find_post(postid) {
 app.get('/post/:id', (req, res) => {
     const queryText = "SELECT * FROM simpleblog";
     const foundPost = find_post(1);
+    res.render('viewpost', { title: foundPost["title"]})
 });
 
 app.get('/', (req, res) => {
