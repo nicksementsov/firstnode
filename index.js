@@ -49,7 +49,7 @@ app.get('/post/:id', (req, res) => {
             console.log(res.rows[0]);
             const postTitle = res.rows[0]["title"];
             console.log(postTitle);
-            res.render('viewpost', { title });
+            res.render('viewpost', { postTitle });
         }
     })
     
