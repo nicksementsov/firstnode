@@ -42,16 +42,17 @@ var find_post = function (postid) {
 };
 
 app.get('/post/:id', (req, res) => {
-    siteone_db.query("SELECT * FROM simpleblog", (err, res) => {
+    var postTitle;
+    console.log("looking for post!");
+    var results = siteone_db.query("SELECT * FROM simpleblog", (err, res) => {
         if (err) {
             console.log(err);
         } else {
             console.log(res.rows[0]);
-            const postTitle = res.rows[0]["title"];
+            postTitle = res.rows[0]["title"];
             console.log(postTitle);
-            res.render('viewpost', { postTitle });
         }
-    })
+    });
     
 });
 
