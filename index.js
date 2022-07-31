@@ -33,8 +33,7 @@ var find_post = function (postid) {
             if (err) {
                 reject(err);
             } else {
-                const title = res.rows[0]["title"];
-                res.render('viewpost', { title: title});
+                title = res.rows[0]["title"];
             }
         });
     });
@@ -48,6 +47,9 @@ app.get('/post/:id', (req, res) => {
             console.log(err);
         } else {
             console.log(res.rows[0]);
+            const postTitle = res.rows[0]["title"];
+            console.log(postTitle);
+            res.render('viewpost', { title });
         }
     })
     
