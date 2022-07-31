@@ -33,7 +33,8 @@ var find_post = function (postid) {
             if (err) {
                 reject(err);
             } else {
-                title = res.rows[0]["title"];
+                const title = res.rows[0]["title"];
+                res.render('viewpost', { title: title});
             }
         });
     });
