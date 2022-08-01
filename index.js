@@ -23,58 +23,25 @@ app.get('/:month', (req, res) => {
 	res.send(`Month of ${month}.`);
 });
 
-/*
-var find_post = function (postid) {
-    var promise = new Promise(function (resolve, reject) {
-        var pid;
-        var title;
-        var content;
-
-        siteone_db.query("SELECT * FROM simpleblog", function (err, res) {
-            if (err) {
-                reject(err);
-            } else {
-                title = res.rows[0]["title"];
-            }
-        });
-    });
-
-    return promise;
-};
-*/
- var post_title ="";
-
 function find_post(postid, callBack) {
-    console.log(postid);
     siteone_db.query("SELECT * FROM simpleblog WHERE id = $1", [postid], (err, res) => {
         if (err) {
-            console.log(err);
-            callBack(err, null);
+            failure: callBack(err, null);
         } else {
-            console.log(res.rows[0]);
-            success: callBack(res.rows[0]["title"]);
+            success: callBack(null, res.rows[0]["title"]);
         }
     });
 }
 
-app.get('/post/:id', (req, res) => {
+app.get('/post/:postid', (req, res) => {
     const { postid } = req.params;
-    console.log(postid)
-    find_post(2, (result) => {
-        console.log(result);
-        res.render('viewpost', {title: result});
-    });
-    /*
-    console.log("looking for post!");
-    results = siteone_db.query("SELECT * FROM simpleblog", (err, res) => {
+    find_post(parseInt(postid), (err, result) => {
         if (err) {
             console.log(err);
         } else {
-            postTitle = res.rows[0]["title"];
+            res.render('viewpost', {title: result});
         }
     });
-    console.log(results);
-    */
 });
 
 app.get('/', (req, res) => {
