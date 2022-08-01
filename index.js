@@ -5,6 +5,8 @@ const { Pool } = require("pg");			// Extracting class Pool
 const app = express();
 const siteone_db = new Pool();
 
+app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
+app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, '/views'));
 
@@ -28,7 +30,7 @@ function find_post(postid, callBack) {
         if (err) {
             failure: callBack(err, null);
         } else {
-            success: callBack(null, res.rows[0]["title"]);
+            success: callBack(null, res.rows[0]);
         }
     });
 }
@@ -39,13 +41,16 @@ app.get('/post/:postid', (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            res.render('viewpost', {title: result});
+            res.render('viewpost', 
+                        {title: result["title"], 
+                        author: result["author"], 
+                        content: result["content"]});
         }
     });
 });
 
 app.get('/', (req, res) => {
-	res.render('index');
+	res.render('index', {title: "Home"});
 });
 
 app.listen(PORT, () =>{
