@@ -5,6 +5,8 @@ const { Pool } = require("pg");			// Extracting class Pool
 const app = express();
 const siteone_db = new Pool();
 
+app.use(express.urlencoded({ extended: true }));
+
 app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
 app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
 app.set('view engine', 'ejs');
@@ -14,6 +16,7 @@ module.exports = { siteone_db };
 
 const PORT = 8080;
 
+/*
 // With a querystring
 app.get('/search', (req, res) => {
 	const { month, day} = req.query;
@@ -24,6 +27,7 @@ app.get('/:month', (req, res) => {
 	const { month } = req.params;
 	res.send(`Month of ${month}.`);
 });
+*/
 
 function find_post(postid, callBack) {
     siteone_db.query("SELECT * FROM simpleblog WHERE id = $1", [postid], (err, res) => {
@@ -31,6 +35,20 @@ function find_post(postid, callBack) {
             failure: callBack(err, null);
         } else {
             success: callBack(null, res.rows[0]);
+        }
+    });
+}
+
+function find_posts(num=-1, callBack) {
+    siteone_db.query("SELECT * FROM simpleblog", (err, res) => {
+        if (err) {
+            failure: callBack(err, null);
+        } else {
+            if (num==-1) {
+                success: callBack(null, res.rows);
+            } else {
+                success: callBack(null, res.rows.slice(0, num));
+            }
         }
     });
 }
@@ -49,8 +67,33 @@ app.get('/post/:postid', (req, res) => {
     });
 });
 
+app.post('/publish', (req, res) => {
+    res.redirect(301, '/');
+});
+
+app.get('/newstory', (req, res) => {
+    res.render('newstory', {title: "New Story"});
+});
+
+app.get('/stories', (req, res) => {
+    find_posts(-1, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render('storylist', {title: "All Stories", stories: result});
+        }
+    });
+});
+
 app.get('/', (req, res) => {
-	res.render('index', {title: "Home"});
+    find_posts(3, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            res.render('index', {title: "Home", stories: result});
+        }
+    });
+
 });
 
 app.listen(PORT, () =>{

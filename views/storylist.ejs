@@ -1,0 +1,22 @@
+<%- include('partials/head') %>
+<%- include('partials/header') %>
+<main>
+    <div class="row">
+        <% for (let story of stories) { %>
+            <div class="col-md-6 col-lg-4 px-2 px-lg-1 pb-1">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title"><%= story.title %></h5>
+                        <h6 class="card-subtitle mb-2"><%= story.author %></h6>
+                        <p class="card-text"><%= story.content.substring(0, 128) %>...</p>
+                        <a href="/post/<%= story.id %>" class="card-link">Read</a>
+                    </div>
+                </div>
+            </div>
+        <% } %>
+    </div>
+    
+    <div class="row">
+    </div>
+</main>
+<%- include('partials/footer') %>
