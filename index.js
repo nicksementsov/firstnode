@@ -30,7 +30,7 @@ app.get('/:month', (req, res) => {
 */
 
 function find_post(postid, callBack) {
-    siteone_db.query("SELECT * FROM simpleblog WHERE id = $1", [postid], (err, res) => {
+    siteone_db.query("SELECT * FROM simpleblog WHERE id = $1;", [postid], (err, res) => {
         if (err) {
             failure: callBack(err, null);
         } else {
@@ -40,7 +40,7 @@ function find_post(postid, callBack) {
 }
 
 function find_posts(num=-1, callBack) {
-    siteone_db.query("SELECT * FROM simpleblog", (err, res) => {
+    siteone_db.query("SELECT * FROM simpleblog;", (err, res) => {
         if (err) {
             failure: callBack(err, null);
         } else {
@@ -49,6 +49,19 @@ function find_posts(num=-1, callBack) {
             } else {
                 success: callBack(null, res.rows.slice(0, num));
             }
+        }
+    });
+}
+
+function add_post(newPost, callBack) {
+    query = "INSERT INTO simpleblog (TITLE, AUTHOR, CONTENT) VALUES($1, $2, $3);";
+    console.log(newPost);
+    values = [newPost["title"], newPost["author"], newPost["story"]];
+    siteone_db.query(query, values, (err, res) => {
+        if (err) {
+            failure: callBack(err, null);
+        } else {
+            success: callBack(null, res);
         }
     });
 }
@@ -68,7 +81,14 @@ app.get('/post/:postid', (req, res) => {
 });
 
 app.post('/publish', (req, res) => {
-    res.redirect(301, '/');
+    add_post(req.body, (err, result) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log(result);
+        }
+    });
+    res.redirect(301, '/stories');
 });
 
 app.get('/newstory', (req, res) => {
