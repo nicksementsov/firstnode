@@ -54,7 +54,7 @@ function find_posts(num=-1, callBack) {
 }
 
 function add_post(newPost, callBack) {
-    query = "INSERT INTO simpleblog (TITLE, AUTHOR, CONTENT) VALUES($1, $2, $3);";
+    query = "INSERT INTO simpleblog (TITLE, AUTHOR, CONTENT) VALUES ($1, $2, $3);";
     console.log(newPost);
     values = [newPost["title"], newPost["author"], newPost["story"]];
     siteone_db.query(query, values, (err, res) => {
